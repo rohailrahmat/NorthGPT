@@ -1,0 +1,1703 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NorthGPT — AI Travel Intelligence for Gilgit-Baltistan</title>
+<meta name="description" content="NorthGPT is an AI-powered tourism assistant for Gilgit-Baltistan, Pakistan. Ask about valleys, plan trips, and discover hidden gems in the Karakoram and Himalayas.">
+<link rel="icon" href="/static/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+
+<style>
+/* ── Theme Tokens: Dark Glassmorphism (Default) ──────────────────────── */
+:root, [data-theme="dark"] {
+  --bg-deep:        #06080d;
+  --bg-dark:        #0a0f18;
+  --glass-surface:  rgba(16, 24, 40, 0.68);
+  --glass-header:   rgba(10, 15, 25, 0.72);
+  --glass-card:     rgba(22, 33, 54, 0.45);
+  --glass-bubble:   rgba(18, 27, 46, 0.65);
+  --glass-input:    rgba(14, 21, 37, 0.75);
+  --glass-hover:    rgba(30, 48, 78, 0.55);
+  --glass-chip:     rgba(255, 255, 255, 0.04);
+  --border-subtle:  rgba(255, 255, 255, 0.08);
+  --border-glass:   rgba(255, 255, 255, 0.14);
+  --border-bright:  rgba(255, 255, 255, 0.26);
+  --accent-cyan:    #38bdf8;
+  --accent-blue:    #2563eb;
+  --accent-indigo:  #6366f1;
+  --accent-glow:    #67e8f9;
+  --text-pure:      #ffffff;
+  --text-primary:   #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted:     #64748b;
+  --danger:         #f87171;
+  --danger-bg:      rgba(248, 113, 113, 0.08);
+  --danger-border:  rgba(248, 113, 113, 0.25);
+  --danger-text:    #fecaca;
+  --user-bubble-bg: linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(99, 102, 241, 0.25) 100%);
+  --user-bubble-border: rgba(56, 189, 248, 0.4);
+  --user-bubble-color: #ffffff;
+  --shadow-ambient: 0 20px 50px rgba(0, 0, 0, 0.5);
+  --shadow-glass:   0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --shadow-glow:    0 0 35px rgba(56, 189, 248, 0.28);
+  --glow-orb-1:     radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(99, 102, 241, 0.15) 60%, transparent 80%);
+  --glow-orb-2:     radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(56, 189, 248, 0.12) 65%, transparent 80%);
+  --glow-orb-3:     radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, rgba(14, 165, 233, 0.08) 60%, transparent 80%);
+  --map-filter:     brightness(0.55) contrast(1.15) saturate(0.4) hue-rotate(180deg) invert(0.9);
+  --map-bg:         #06090f;
+  --raw-bg:         rgba(6, 10, 18, 0.88);
+}
+
+/* ── Theme Tokens: White Glassmorphism (Light Mode) ─────────────────── */
+[data-theme="light"] {
+  --bg-deep:        #eef4fb;
+  --bg-dark:        #f8fafc;
+  --glass-surface:  rgba(255, 255, 255, 0.72);
+  --glass-header:   rgba(255, 255, 255, 0.82);
+  --glass-card:     rgba(255, 255, 255, 0.78);
+  --glass-bubble:   rgba(255, 255, 255, 0.85);
+  --glass-input:    rgba(255, 255, 255, 0.92);
+  --glass-hover:    rgba(241, 245, 249, 0.92);
+  --glass-chip:     rgba(255, 255, 255, 0.65);
+  --border-subtle:  rgba(148, 163, 184, 0.24);
+  --border-glass:   rgba(255, 255, 255, 0.85);
+  --border-bright:  rgba(14, 165, 233, 0.35);
+  --accent-cyan:    #0284c7;
+  --accent-blue:    #2563eb;
+  --accent-indigo:  #4f46e5;
+  --accent-glow:    #0369a1;
+  --text-pure:      #0f172a;
+  --text-primary:   #1e293b;
+  --text-secondary: #475569;
+  --text-muted:     #64748b;
+  --danger:         #dc2626;
+  --danger-bg:      rgba(254, 226, 226, 0.65);
+  --danger-border:  rgba(248, 113, 113, 0.4);
+  --danger-text:    #991b1b;
+  --user-bubble-bg: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(99, 102, 241, 0.12) 100%);
+  --user-bubble-border: rgba(14, 165, 233, 0.35);
+  --user-bubble-color: #0f172a;
+  --shadow-ambient: 0 16px 40px rgba(15, 23, 42, 0.08);
+  --shadow-glass:   0 8px 30px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --shadow-glow:    0 0 35px rgba(14, 165, 233, 0.18);
+  --glow-orb-1:     radial-gradient(circle, rgba(186, 230, 253, 0.75) 0%, rgba(199, 210, 254, 0.5) 55%, transparent 80%);
+  --glow-orb-2:     radial-gradient(circle, rgba(224, 231, 255, 0.7) 0%, rgba(186, 230, 253, 0.4) 65%, transparent 80%);
+  --glow-orb-3:     radial-gradient(circle, rgba(165, 243, 252, 0.6) 0%, rgba(224, 231, 255, 0.3) 60%, transparent 80%);
+  --map-filter:     none;
+  --map-bg:         #e2e8f0;
+  --raw-bg:         rgba(241, 245, 249, 0.95);
+}
+
+:root {
+  --radius-xs:      6px;
+  --radius-sm:      10px;
+  --radius-md:      16px;
+  --radius-lg:      22px;
+  --radius-pill:    9999px;
+  --font-sans:      'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display:   'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:      'JetBrains Mono', monospace;
+  --transition:     all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Reset & Baseline ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+  width: 100%;
+}
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+::selection {
+  background: rgba(56, 189, 248, 0.35);
+  color: var(--text-pure);
+}
+
+/* ── Ambient Aurora Glow Elements ───────────────────────────────────── */
+.ambient-glow {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.65;
+  transition: background 0.6s ease, opacity 0.6s ease;
+}
+.glow-top-left {
+  top: -120px;
+  left: -80px;
+  width: 520px;
+  height: 520px;
+  background: var(--glow-orb-1);
+  animation: floatOrb 18s ease-in-out infinite alternate;
+}
+.glow-bottom-center {
+  bottom: -150px;
+  left: 20%;
+  width: 580px;
+  height: 580px;
+  background: var(--glow-orb-2);
+  animation: floatOrb 22s ease-in-out infinite alternate-reverse;
+}
+.glow-top-right {
+  top: 10%;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  background: var(--glow-orb-3);
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, 30px) scale(1.08); }
+  100% { transform: translate(-30px, 50px) scale(0.95); }
+}
+
+/* ── Custom Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-cyan); }
+
+/* ── Glassmorphism Header ───────────────────────────────────────────── */
+header {
+  position: relative;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 26px;
+  background: var(--glass-header);
+  backdrop-filter: blur(26px) saturate(190%);
+  -webkit-backdrop-filter: blur(26px) saturate(190%);
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(99, 102, 241, 0.3));
+  border: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+.logo-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-cyan);
+}
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  color: var(--text-pure);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.nav-home-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-chip);
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+.nav-home-pill:hover {
+  background: rgba(56, 189, 248, 0.14);
+  border-color: var(--accent-cyan);
+  color: var(--text-pure);
+  transform: translateY(-1px);
+}
+.brand-name span {
+  background: linear-gradient(135deg, #0284c7 20%, #6366f1 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+[data-theme="dark"] .brand-name span {
+  background: linear-gradient(135deg, #38bdf8 20%, #818cf8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--accent-cyan);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.1);
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  animation: pulseGlow 2.5s infinite;
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+/* ── Theme Switcher Button ─────────────────────────────────────────── */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-chip);
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  cursor: pointer;
+  box-shadow: var(--shadow-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.22s ease;
+}
+.theme-toggle-btn:hover {
+  transform: translateY(-1px) scale(1.05);
+  color: var(--accent-cyan);
+  border-color: var(--border-bright);
+}
+.theme-toggle-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* ── Main Layout Workspace ──────────────────────────────────────────── */
+main {
+  position: relative;
+  z-index: 10;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 240px minmax(380px, 520px) 1fr;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── Sidebar Conversations ────────────────────────────────────────── */
+#sidebar {
+  border-right: 1px solid var(--border-subtle);
+  background: var(--glass-header);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+.session-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: var(--text-primary);
+  text-decoration: none;
+  cursor: pointer;
+  margin-bottom: 3px;
+  transition: all 0.15s ease;
+  border: 1px solid transparent;
+  user-select: none;
+}
+.session-item:hover {
+  background: var(--glass-chip);
+  border-color: var(--border-subtle);
+  color: var(--text-pure);
+}
+.session-item.active {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.28);
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+.session-item .title-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+.session-item .delete-btn {
+  opacity: 0;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.15s, color 0.15s;
+}
+.session-item:hover .delete-btn {
+  opacity: 1;
+}
+.session-item .delete-btn:hover {
+  color: #ef4444;
+}
+
+/* ── Left Glass Chat Panel ──────────────────────────────────────────── */
+#left {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: 1px solid var(--border-subtle);
+  background: var(--glass-surface);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  position: relative;
+  box-shadow: 10px 0 35px rgba(0, 0, 0, 0.08);
+  transition: background 0.3s ease;
+}
+
+/* ── Glass Pill Segmented Tabs ──────────────────────────────────────── */
+.tabs-wrapper {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+.tabs {
+  display: flex;
+  background: var(--glass-chip);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  padding: 4px;
+  gap: 4px;
+}
+.tabs button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.tabs button:hover {
+  color: var(--text-pure);
+}
+.tabs button.on {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(99, 102, 241, 0.18));
+  border: 1px solid var(--border-bright);
+  color: var(--text-pure);
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* ── Chat Messages Container ────────────────────────────────────────── */
+#log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  scroll-behavior: smooth;
+}
+
+/* ── Hero Presentation Card ─────────────────────────────────────────── */
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 22px;
+  border-radius: var(--radius-lg);
+  background: var(--glass-card);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-glass);
+  animation: heroIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), transparent);
+}
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+.hero h2 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+  color: var(--text-pure);
+}
+.hero h2 span {
+  background: linear-gradient(135deg, var(--text-pure) 40%, var(--accent-cyan) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero p {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.suggestions-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ── Suggestion Chips (Frosted Glass Pills) ─────────────────────────── */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-glass);
+  background: var(--glass-chip);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  user-select: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+.chip:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--accent-cyan);
+  color: var(--text-pure);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.22);
+}
+
+/* ── Modern Chat Bubbles ────────────────────────────────────────────── */
+.me {
+  align-self: flex-end;
+  max-width: 82%;
+  background: var(--user-bubble-bg);
+  border: 1px solid var(--user-bubble-border);
+  border-radius: 18px 18px 4px 18px;
+  padding: 12px 18px;
+  font-size: 14px;
+  color: var(--user-bubble-color);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: bubblePop 0.3s ease both;
+  line-height: 1.55;
+}
+.bot {
+  align-self: flex-start;
+  max-width: 95%;
+  background: var(--glass-bubble);
+  border: 1px solid var(--border-glass);
+  border-radius: 18px 18px 18px 4px;
+  padding: 16px 18px;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: bubblePop 0.3s ease both;
+  position: relative;
+  transition: background 0.3s ease;
+}
+@keyframes bubblePop {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.bot-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 10px;
+}
+.bot-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+}
+
+/* ── Typing Cursor ──────────────────────────────────────────────────── */
+.cursor::after {
+  content: '▋';
+  color: var(--accent-cyan);
+  animation: blink 0.9s steps(1) infinite;
+  display: inline-block;
+  margin-left: 3px;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ── Source Verification Chips ──────────────────────────────────────── */
+.sources-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+}
+.src-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-subtle);
+  background: var(--glass-chip);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.src-chip:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.1);
+}
+.src-chip svg { width: 11px; height: 11px; flex-shrink: 0; }
+.raw-data {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: var(--raw-bg);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--accent-glow);
+  white-space: pre-wrap;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+/* ── Compare Mode Glass Columns ─────────────────────────────────────── */
+.cmp {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  white-space: normal;
+  margin-top: 6px;
+}
+.cmp-col {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--glass-chip);
+  border: 1px solid var(--border-subtle);
+}
+.cmp-col h3 {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cmp-col p {
+  font-size: 13px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+.cmp-col.plain h3 {
+  color: var(--text-muted);
+}
+
+/* ── Itinerary Days Glass Cards ─────────────────────────────────────── */
+.day-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-top: 12px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(99, 102, 241, 0.05));
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  animation: bubblePop 0.35s ease both;
+}
+.day-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  background: linear-gradient(180deg, var(--accent-cyan), var(--accent-indigo));
+  box-shadow: 0 0 10px var(--accent-cyan);
+}
+.day-card b {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-pure);
+  display: block;
+  margin-bottom: 6px;
+  padding-left: 6px;
+}
+.day-card .plan {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  padding-left: 6px;
+}
+.day-card .cost {
+  margin-top: 8px;
+  padding-left: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-glow);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.safety-note {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--danger-text);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* ── Error Notification ─────────────────────────────────────────────── */
+.error-msg {
+  font-size: 13px;
+  color: var(--danger);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+}
+
+/* ── Input Dock (Floating Glass Capsule) ────────────────────────────── */
+.input-area {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--glass-surface);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+}
+form { display: contents; }
+.input-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+.input-wrap {
+  flex: 1;
+  position: relative;
+}
+#q {
+  width: 100%;
+  background: var(--glass-input);
+  color: var(--text-pure);
+  border: 1px solid var(--border-glass);
+  padding: 13px 18px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+  transition: all 0.25s ease;
+  resize: none;
+  min-height: 48px;
+  max-height: 120px;
+  line-height: 1.5;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+#q::placeholder { color: var(--text-muted); }
+#q:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18);
+}
+.send-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.35);
+}
+.send-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 26px rgba(56, 189, 248, 0.5);
+}
+.send-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+.send-btn svg {
+  width: 20px;
+  height: 20px;
+  color: #ffffff;
+  transform: rotate(45deg) translate(-1px, 1px);
+}
+.input-options {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+.cmp-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+.cmp-label:hover { color: var(--text-pure); }
+.cmp-label input[type=checkbox] {
+  accent-color: var(--accent-cyan);
+  cursor: pointer;
+  width: 14px;
+  height: 14px;
+}
+
+/* ── Trip Planner Form ──────────────────────────────────────────────── */
+.plan-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.plan-fields {
+  display: grid;
+  grid-template-columns: 85px 140px 1fr;
+  gap: 10px;
+}
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.field-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.field-input {
+  background: var(--glass-input);
+  color: var(--text-pure);
+  border: 1px solid var(--border-glass);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  outline: none;
+  width: 100%;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.field-input::placeholder { color: var(--text-muted); }
+.field-input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.16);
+}
+.plan-btn {
+  background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #6366f1 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 12px 22px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+  white-space: nowrap;
+}
+.plan-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(56, 189, 248, 0.5);
+}
+
+/* ── Right Panel: Map Glass Presentation ────────────────────────────── */
+#map {
+  min-height: 300px;
+  background: var(--map-bg);
+  position: relative;
+  transition: background 0.3s ease;
+}
+.leaflet-container {
+  background: var(--map-bg) !important;
+  font-family: var(--font-sans) !important;
+}
+.leaflet-tile {
+  filter: var(--map-filter);
+  transition: filter 0.4s ease;
+}
+.leaflet-control-attribution { display: none !important; }
+.leaflet-popup-content-wrapper {
+  background: var(--glass-header) !important;
+  border: 1px solid var(--border-glass) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: var(--shadow-ambient) !important;
+  color: var(--text-pure) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+.leaflet-popup-tip {
+  background: var(--glass-header) !important;
+  border: 1px solid var(--border-glass) !important;
+}
+.leaflet-popup-content {
+  color: var(--text-pure) !important;
+  font: 13px var(--font-sans) !important;
+  margin: 10px 14px !important;
+}
+.leaflet-control-zoom {
+  border: none !important;
+  box-shadow: var(--shadow-glass) !important;
+  border-radius: var(--radius-sm) !important;
+  overflow: hidden;
+}
+.leaflet-control-zoom a {
+  background: var(--glass-surface) !important;
+  color: var(--text-pure) !important;
+  border: 1px solid var(--border-subtle) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+.leaflet-control-zoom a:hover {
+  background: rgba(56, 189, 248, 0.25) !important;
+}
+
+/* ── Map Overlay Glass Badge ────────────────────────────────────────── */
+.map-overlay {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: none;
+}
+.map-badge {
+  padding: 7px 16px;
+  border-radius: var(--radius-pill);
+  background: var(--glass-header);
+  border: 1px solid var(--border-bright);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-pure);
+  letter-spacing: 0.03em;
+  box-shadow: var(--shadow-glass);
+}
+
+/* ── Responsive Styling ─────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  main { grid-template-columns: 200px minmax(360px, 480px) 1fr; }
+}
+@media (max-width: 860px) {
+  main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr 280px;
+  }
+  #sidebar {
+    width: 100%;
+    max-height: 120px;
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+    flex-direction: row;
+  }
+  #sidebar #session-list { display: flex; flex-direction: row; overflow-x: auto; overflow-y: hidden; }
+  #left {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .cmp { grid-template-columns: 1fr; }
+  .plan-fields { grid-template-columns: 1fr 1fr; }
+  body { overflow: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- Ambient Aurora Light Glows -->
+<div class="ambient-glow glow-top-left"></div>
+<div class="ambient-glow glow-bottom-center"></div>
+<div class="ambient-glow glow-top-right"></div>
+
+<!-- Glassmorphism Header -->
+<header>
+  <div class="brand-container">
+    <a href="/" class="brand-lockup-link" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+      <img src="/static/logo.svg" alt="NorthGPT" style="width:36px; height:36px; display:block;">
+      <div style="display:flex; flex-direction:column;">
+        <div class="brand-name" style="font-size:19px; line-height:1.1;">NORTH<span>GPT</span></div>
+        <div style="font-size:8px; font-weight:700; letter-spacing:1.5px; color:var(--text-muted); text-transform:uppercase;">AI ASSISTANT <span style="color:#f59e0b;">•</span> GB</div>
+      </div>
+    </a>
+  </div>
+  
+  <div class="header-actions">
+    <!-- New Chat button -->
+    <button id="new-chat-btn" onclick="startNewChat()" title="Start new conversation" style="display:inline-flex; align-items:center; gap:7px; padding:7px 14px; border-radius:9999px; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.28); color:var(--accent-cyan); font-size:12.5px; font-weight:600; cursor:pointer; font-family:var(--font-sans); transition:all 0.2s;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Chat
+    </button>
+    <div class="header-badge" id="kb-badge">
+      <div class="status-dot"></div>
+      <span>{{ n }} destinations</span>
+    </div>
+    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme" title="Toggle Light / Dark">
+      <svg id="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg id="theme-moon" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
+    <!-- User account -->
+    <div style="position:relative;">
+      <button id="userMenuBtnChat" onclick="toggleChatUserMenu()" style="display:inline-flex; align-items:center; gap:8px; padding:6px 12px 6px 7px; border-radius:9999px; background:var(--glass-chip); border:1px solid var(--border-glass); cursor:pointer; font-size:13px; font-weight:600; color:var(--text-primary); font-family:var(--font-sans);">
+        <div style="width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#0ea5e9,#6366f1); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#fff; flex-shrink:0;">{{ user.name[0]|upper }}</div>
+        <span>{{ user.name.split(' ')[0] }}</span>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div id="chatUserDropdown" style="position:absolute; top:calc(100% + 8px); right:0; min-width:200px; background:var(--glass-surface); border:1px solid var(--border-glass); border-radius:14px; box-shadow:var(--shadow-glass); overflow:hidden; display:none; z-index:100; backdrop-filter:blur(20px);">
+        <div style="padding:12px 16px; border-bottom:1px solid var(--border-subtle);">
+          <div style="font-weight:700; color:var(--text-pure); font-size:13.5px;">{{ user.name }}</div>
+          <div style="font-size:11.5px; color:var(--text-muted);">{{ user.email }}</div>
+        </div>
+        <a href="/" style="display:flex; align-items:center; gap:9px; padding:10px 16px; font-size:13px; color:var(--text-primary); text-decoration:none; font-weight:600;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          Back to Home
+        </a>
+        <a href="/logout" style="display:flex; align-items:center; gap:9px; padding:10px 16px; font-size:13px; color:#ef4444; text-decoration:none; font-weight:600;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Sign Out
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Workspace Main Area -->
+<main>
+  <!-- Conversation History Sidebar -->
+  <aside id="sidebar" style="display:flex; flex-direction:column; width:240px; flex-shrink:0; border-right:1px solid var(--border-subtle); background:var(--glass-header); backdrop-filter:blur(20px); overflow:hidden;">
+    <div style="padding:14px 14px 10px; border-bottom:1px solid var(--border-subtle); flex-shrink:0;">
+      <div style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:10px;">Conversations</div>
+      <button onclick="startNewChat()" id="sidebar-new-btn" style="width:100%; display:flex; align-items:center; gap:8px; padding:9px 12px; border-radius:10px; background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); color:var(--accent-cyan); font-size:12.5px; font-weight:600; cursor:pointer; font-family:var(--font-sans); transition:all 0.2s;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New Conversation
+      </button>
+    </div>
+    <div id="session-list" style="flex:1; overflow-y:auto; padding:8px;"></div>
+  </aside>
+
+  <!-- Left Panel: Chat & Trip Planner -->
+  <section id="left">
+    <div class="tabs-wrapper">
+      <div class="tabs" role="tablist">
+        <button id="t1" class="on" role="tab" aria-selected="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          Ask Anything
+        </button>
+        <button id="t2" role="tab" aria-selected="false">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+          Plan a Trip
+        </button>
+      </div>
+    </div>
+
+    <div id="log" role="log" aria-live="polite">
+      <!-- Welcome Hero Card -->
+      <div class="hero" id="hero">
+        <div class="hero-tag">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          AI-Powered Exploration
+        </div>
+        <h2>Where in Gilgit-Baltistan<br><span>are you headed?</span></h2>
+        <p>Ask about serene valleys, road conditions, verified seasons, budgets, and hidden high-altitude gems. Grounded in curated local intelligence.</p>
+        <div class="suggestions-label">Explore popular inquiries</div>
+        <div class="suggestions">
+          <button class="chip" data-q="Tell me about Phander Valley" id="chip-phander">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg>
+            Phander Valley
+          </button>
+          <button class="chip" data-q="Which valleys are quiet and less crowded?" id="chip-quiet">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/></svg>
+            Quiet Valleys
+          </button>
+          <button class="chip" data-q="What is there to do in Skardu?" id="chip-skardu">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 20 9 4 15 14 18 8 21 20 3 20"/></svg>
+            Skardu Highlights
+          </button>
+          <button class="chip" data-q="What is the best time to visit Hunza?" id="chip-hunza">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            Blossom Season
+          </button>
+          <button class="chip" data-q="How do I get to Fairy Meadows?" id="chip-fairy">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+            Fairy Meadows Route
+          </button>
+          <button class="chip" data-q="Tell me about hidden gems in Gilgit-Baltistan" id="chip-hidden">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 3 18 3 22 9 12 22 2 9 6 3"/></svg>
+            Hidden Gems
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Prompt Dock -->
+    <div class="input-area" id="ask-area">
+      <form id="fq" novalidate>
+        <div class="input-row">
+          <div class="input-wrap">
+            <textarea id="q" placeholder="Ask about routes, weather, cost, or local passes…" autocomplete="off" rows="1" aria-label="Your question"></textarea>
+          </div>
+          <button type="submit" class="send-btn" id="send-btn" aria-label="Send query">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+        <div class="input-options">
+          <label class="cmp-label" for="cmp">
+            <input type="checkbox" id="cmp">
+            Compare alongside standard Gemini
+          </label>
+        </div>
+      </form>
+    </div>
+
+    <!-- Plan Itinerary Dock -->
+    <div class="input-area" id="plan-area" hidden>
+      <form id="fi" novalidate>
+        <div class="plan-form">
+          <div class="plan-fields">
+            <div class="field-group">
+              <label class="field-label" for="days">Days</label>
+              <input id="days" type="number" min="1" max="21" value="5" class="field-input" aria-label="Number of days">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="bud">Budget (PKR)</label>
+              <input id="bud" type="number" value="50000" class="field-input" aria-label="Budget in PKR">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="int">Interests</label>
+              <input id="int" placeholder="hiking, culture, lakes…" class="field-input" aria-label="Your interests">
+            </div>
+          </div>
+          <button type="submit" class="plan-btn" id="plan-btn">✨ Generate Intelligent Itinerary</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Interactive Map Section -->
+  <div id="map" role="region" aria-label="Interactive map of Gilgit-Baltistan">
+    <div class="map-overlay">
+      <div class="map-badge" id="map-badge">Gilgit-Baltistan Explorer</div>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+/* ── Theme Switching System ─────────────────────────────────────────── */
+const themeToggle = document.getElementById('theme-toggle');
+const themeSun = document.getElementById('theme-sun');
+const themeMoon = document.getElementById('theme-moon');
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('northgpt_theme', theme);
+  if (theme === 'light') {
+    themeSun.style.display = 'none';
+    themeMoon.style.display = 'block';
+  } else {
+    themeSun.style.display = 'block';
+    themeMoon.style.display = 'none';
+  }
+}
+
+// Initial theme check
+const savedTheme = localStorage.getItem('northgpt_theme') || 
+  (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+applyTheme(savedTheme);
+
+themeToggle.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  applyTheme(newTheme);
+});
+
+/* ── Leaflet Cyber-Glass Map Setup ─────────────────────────────────── */
+const map = L.map('map', { zoomControl: true }).setView([35.9, 74.8], 7);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+let layer = L.layerGroup().addTo(map);
+
+function glowingPinIcon() {
+  return L.divIcon({
+    className: '',
+    html: `
+      <div style="position:relative; width:22px; height:22px; display:flex; align-items:center; justify-content:center;">
+        <div style="position:absolute; width:22px; height:22px; border-radius:50%; background:rgba(56,189,248,0.3); animation:pulseGlow 2s infinite;"></div>
+        <div style="width:12px; height:12px; border-radius:50%; background:#38bdf8; border:2px solid #ffffff; box-shadow:0 0 12px #38bdf8, 0 0 20px #2563eb;"></div>
+      </div>
+    `,
+    iconSize: [22, 22],
+    iconAnchor: [11, 11],
+    popupAnchor: [0, -12]
+  });
+}
+
+function pin(pins, route) {
+  layer.clearLayers();
+  if (!pins || !pins.length) return;
+  pins.forEach(p => {
+    L.marker([p.lat, p.lng], { icon: glowingPinIcon() })
+      .addTo(layer)
+      .bindPopup(`<strong>${p.name}</strong>`);
+  });
+  if (route && pins.length > 1) {
+    L.polyline(pins.map(p => [p.lat, p.lng]), {
+      color: '#38bdf8', weight: 2.5, dashArray: '6 6', opacity: 0.85
+    }).addTo(layer);
+  }
+  if (pins.length === 1) {
+    map.flyTo([pins[0].lat, pins[0].lng], 10, { duration: 1.5 });
+  } else {
+    map.flyToBounds(pins.map(p => [p.lat, p.lng]), { padding: [50, 50], duration: 1.5 });
+  }
+  document.getElementById('map-badge').textContent = pins.map(p => p.name).join(' · ');
+}
+
+/* ── DOM & Typewriter Helpers ───────────────────────────────────────── */
+const log = document.getElementById('log');
+
+function typewrite(node, text, done) {
+  let i = 0;
+  node.textContent = '';
+  node.classList.add('cursor');
+  (function step() {
+    node.textContent = text.slice(0, i += 4);
+    log.scrollTop = log.scrollHeight;
+    if (i < text.length) setTimeout(step, 10);
+    else { node.classList.remove('cursor'); done && done(); }
+  })();
+}
+
+function srcChips(container, sources) {
+  if (!sources || !sources.length) return;
+  const row = document.createElement('div');
+  row.className = 'sources-row';
+  sources.forEach(s => {
+    const b = document.createElement('button');
+    b.className = 'src-chip';
+    b.innerHTML = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8l3 3 7-7"/></svg>${s.label} · ${s.section.replace(/_/g,' ')}`;
+    b.onclick = async () => {
+      let raw = container.querySelector('.raw-data');
+      if (raw) { raw.remove(); return; }
+      raw = document.createElement('div');
+      raw.className = 'raw-data';
+      raw.textContent = 'Loading source details…';
+      container.appendChild(raw);
+      try {
+        const d = await (await fetch('/api/dest/' + s.dest)).json();
+        raw.textContent = JSON.stringify(d, null, 2);
+      } catch(e) { raw.textContent = 'Error loading source payload.'; }
+    };
+    row.appendChild(b);
+  });
+  container.appendChild(row);
+}
+
+async function post(url, body) {
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const j = await r.json();
+  if (j.error) throw new Error(j.error);
+  return j;
+}
+
+/* ── Ask Flow ───────────────────────────────────────────────────────── */
+async function ask(q) {
+  document.getElementById('hero')?.remove();
+  
+  // User Bubble
+  const me = document.createElement('div');
+  me.className = 'me';
+  me.textContent = q;
+  log.appendChild(me);
+  log.scrollTop = log.scrollHeight;
+
+  // Bot Bubble (Thinking State)
+  const box = document.createElement('div');
+  box.className = 'bot';
+  const lbl = document.createElement('div');
+  lbl.className = 'bot-label';
+  lbl.textContent = 'NorthGPT Engine';
+  box.appendChild(lbl);
+  const body = document.createElement('div');
+  body.textContent = 'Consulting regional intelligence…';
+  body.classList.add('cursor');
+  box.appendChild(body);
+  log.appendChild(box);
+  log.scrollTop = log.scrollHeight;
+
+  try {
+    const isNew = !currentSessionId;
+    const j = await post('/api/chat', {
+      q,
+      session_id: currentSessionId,
+      compare: document.getElementById('cmp').checked
+    });
+    body.classList.remove('cursor');
+    if (j.session_id) {
+      currentSessionId = j.session_id;
+      if (isNew) {
+        loadSessions();
+      }
+    }
+
+    if (j.plain != null) {
+      // Side-by-side comparison mode
+      body.textContent = '';
+      body.style.display = 'contents';
+      const cmpDiv = document.createElement('div');
+      cmpDiv.className = 'cmp';
+      cmpDiv.innerHTML = `
+        <div class="cmp-col">
+          <h3>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+            NorthGPT (Verified RAG)
+          </h3>
+          <p></p>
+        </div>
+        <div class="cmp-col plain">
+          <h3>Standard Gemini</h3>
+          <p></p>
+        </div>`;
+      cmpDiv.children[0].querySelector('p').textContent = j.text;
+      cmpDiv.children[1].querySelector('p').textContent = j.plain;
+      box.appendChild(cmpDiv);
+      srcChips(box, j.sources);
+      pin(j.pins);
+    } else {
+      typewrite(body, j.text, () => { srcChips(box, j.sources); pin(j.pins); });
+    }
+  } catch(e) {
+    body.classList.remove('cursor');
+    body.className = 'error-msg';
+    body.textContent = '⚠ ' + e.message + '. Please ensure GEMINI_API_KEY is configured and knowledge index built.';
+  }
+}
+
+/* ── Itinerary Planner Flow ─────────────────────────────────────────── */
+document.getElementById('fi').onsubmit = async (e) => {
+  e.preventDefault();
+  document.getElementById('hero')?.remove();
+  const days = +document.getElementById('days').value;
+  const budget = +document.getElementById('bud').value;
+  const interests = document.getElementById('int').value || 'sightseeing';
+
+  const me = document.createElement('div');
+  me.className = 'me';
+  me.textContent = `${days} Days · ${budget.toLocaleString()} PKR · ${interests}`;
+  log.appendChild(me);
+
+  const box = document.createElement('div');
+  box.className = 'bot';
+  const lbl = document.createElement('div');
+  lbl.className = 'bot-label';
+  lbl.textContent = 'Intelligent Itinerary Planner';
+  box.appendChild(lbl);
+  const status = document.createElement('div');
+  status.textContent = 'Synthesizing optimal route and verified costs…';
+  status.classList.add('cursor');
+  box.appendChild(status);
+  log.appendChild(box);
+  log.scrollTop = log.scrollHeight;
+
+  try {
+    const p = await post('/api/itinerary', { days, budget, interests });
+    status.remove();
+    (p.days || []).forEach((d, i) => {
+      const card = document.createElement('div');
+      card.className = 'day-card';
+      card.style.animationDelay = `${i * 0.07}s`;
+      const title = document.createElement('b');
+      title.textContent = `Day ${d.day} — ${d.title}`;
+      const plan = document.createElement('div');
+      plan.className = 'plan';
+      plan.textContent = d.plan;
+      const cost = document.createElement('div');
+      cost.className = 'cost';
+      cost.textContent = d.cost_pkr != null
+        ? `💳 Estimated: ${d.cost_pkr.toLocaleString()} PKR`
+        : '💳 Cost: Inquire locally';
+      card.append(title, plan, cost);
+      box.appendChild(card);
+    });
+    if (p.safety_note) {
+      const note = document.createElement('div');
+      note.className = 'safety-note';
+      note.innerHTML = `<span>⚠️</span><div>${p.safety_note}</div>`;
+      box.appendChild(note);
+    }
+    pin(p.pins, true);
+  } catch(e) {
+    status.classList.remove('cursor');
+    status.className = 'error-msg';
+    status.textContent = '⚠ Could not assemble itinerary: ' + e.message;
+  }
+};
+
+/* ── Form Inputs & Tabs Wiring ──────────────────────────────────────── */
+document.getElementById('fq').onsubmit = e => {
+  e.preventDefault();
+  const q = document.getElementById('q').value.trim();
+  if (q) {
+    document.getElementById('q').value = '';
+    ask(q);
+  }
+};
+
+// Auto-expand textarea
+document.getElementById('q').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+
+// Submit on Enter (Shift+Enter for newline)
+document.getElementById('q').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    document.getElementById('fq').dispatchEvent(new Event('submit'));
+  }
+});
+
+// Quick suggestion clicks
+document.addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (chip && chip.dataset.q) ask(chip.dataset.q);
+});
+
+// Tab Switcher
+document.getElementById('t1').onclick = () => {
+  document.getElementById('t1').classList.add('on');
+  document.getElementById('t1').setAttribute('aria-selected','true');
+  document.getElementById('t2').classList.remove('on');
+  document.getElementById('t2').setAttribute('aria-selected','false');
+  document.getElementById('ask-area').hidden = false;
+  document.getElementById('plan-area').hidden = true;
+};
+document.getElementById('t2').onclick = () => {
+  document.getElementById('t2').classList.add('on');
+  document.getElementById('t2').setAttribute('aria-selected','true');
+  document.getElementById('t1').classList.remove('on');
+  document.getElementById('t1').setAttribute('aria-selected','false');
+  document.getElementById('plan-area').hidden = false;
+  document.getElementById('ask-area').hidden = true;
+};
+
+/* ── User Dropdown Logic ────────────────────────────────────────────── */
+function toggleChatUserMenu() {
+  const dd = document.getElementById('chatUserDropdown');
+  if (dd) {
+    dd.style.display = dd.style.display === 'block' ? 'none' : 'block';
+  }
+}
+document.addEventListener('click', (e) => {
+  const dd = document.getElementById('chatUserDropdown');
+  const btn = document.getElementById('userMenuBtnChat');
+  if (dd && btn && !btn.contains(e.target) && !dd.contains(e.target)) {
+    dd.style.display = 'none';
+  }
+});
+
+/* ── Session History Management ─────────────────────────────────────── */
+let currentSessionId = null;
+const heroTemplate = document.getElementById('hero') ? document.getElementById('hero').outerHTML : '';
+
+async function loadSessions() {
+  try {
+    const res = await fetch('/api/sessions');
+    if (!res.ok) return;
+    const sessions = await res.json();
+    const container = document.getElementById('session-list');
+    if (!container) return;
+
+    if (!sessions || sessions.length === 0) {
+      container.innerHTML = `<div style="padding:16px 8px; text-align:center; font-size:11.5px; color:var(--text-muted);">No saved chats yet.<br>Ask a question to start!</div>`;
+      return;
+    }
+
+    container.innerHTML = '';
+    sessions.forEach(s => {
+      const item = document.createElement('div');
+      item.className = 'session-item' + (s.id === currentSessionId ? ' active' : '');
+      item.dataset.id = s.id;
+      item.innerHTML = `
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0; opacity:0.75;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="title-text" title="${s.title || 'Conversation'}">${s.title || 'Conversation'}</span>
+        <button class="delete-btn" title="Delete conversation" onclick="deleteSession(event, '${s.id}')">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+      `;
+      item.onclick = (e) => {
+        if (!e.target.closest('.delete-btn')) {
+          selectSession(s.id);
+        }
+      };
+      container.appendChild(item);
+    });
+  } catch(e) {
+    console.warn('Could not load sessions:', e);
+  }
+}
+
+function startNewChat() {
+  currentSessionId = null;
+  log.innerHTML = heroTemplate;
+  document.querySelectorAll('.session-item').forEach(el => el.classList.remove('active'));
+  layer.clearLayers();
+  document.getElementById('map-badge').textContent = 'Gilgit-Baltistan Explorer';
+  const qInput = document.getElementById('q');
+  if (qInput) {
+    qInput.value = '';
+    qInput.focus();
+  }
+}
+
+async function selectSession(sid) {
+  currentSessionId = sid;
+  document.querySelectorAll('.session-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === sid);
+  });
+  log.innerHTML = '<div style="padding:20px; text-align:center; color:var(--text-muted); font-size:13px;">Loading conversation history…</div>';
+
+  try {
+    const res = await fetch('/api/sessions/' + sid);
+    if (!res.ok) throw new Error('Session not found');
+    const data = await res.json();
+    log.innerHTML = '';
+
+    const messages = data.messages || [];
+    if (messages.length === 0) {
+      log.innerHTML = heroTemplate;
+      return;
+    }
+
+    let lastPins = [];
+    messages.forEach(m => {
+      if (m.role === 'user') {
+        const me = document.createElement('div');
+        me.className = 'me';
+        me.textContent = m.content;
+        log.appendChild(me);
+      } else {
+        const box = document.createElement('div');
+        box.className = 'bot';
+        const lbl = document.createElement('div');
+        lbl.className = 'bot-label';
+        lbl.textContent = 'NorthGPT Engine';
+        box.appendChild(lbl);
+        const body = document.createElement('div');
+        body.textContent = m.content;
+        box.appendChild(body);
+        if (m.sources && m.sources.length) {
+          srcChips(box, m.sources);
+        }
+        log.appendChild(box);
+        if (m.pins && m.pins.length) {
+          lastPins = m.pins;
+        }
+      }
+    });
+
+    if (lastPins.length) {
+      pin(lastPins);
+    }
+    log.scrollTop = log.scrollHeight;
+  } catch(e) {
+    log.innerHTML = `<div class="error-msg">⚠ Could not load conversation: ${e.message}</div>`;
+  }
+}
+
+async function deleteSession(e, sid) {
+  e.stopPropagation();
+  if (!confirm('Delete this conversation?')) return;
+  try {
+    await fetch('/api/sessions/' + sid, { method: 'DELETE' });
+    if (currentSessionId === sid) {
+      startNewChat();
+    }
+    loadSessions();
+  } catch(err) {
+    console.error('Delete error:', err);
+  }
+}
+
+// Check for deep-link query parameter (?q=... or ?tab=planner...)
+window.addEventListener('DOMContentLoaded', () => {
+  loadSessions();
+
+  const params = new URLSearchParams(window.location.search);
+  const initialQ = params.get('q');
+  const tab = params.get('tab');
+  const days = params.get('days');
+  const budget = params.get('budget');
+  const interests = params.get('interests');
+
+  if (tab === 'planner' || days) {
+    document.getElementById('t2').click();
+    if (days) document.getElementById('days').value = days;
+    if (budget) document.getElementById('bud').value = budget;
+    if (interests) document.getElementById('int').value = interests;
+    if (days && budget) {
+      document.getElementById('fi').dispatchEvent(new Event('submit'));
+    }
+  } else if (initialQ) {
+    document.getElementById('q').value = initialQ;
+    ask(initialQ);
+  }
+});
+</script>
+</body>
+</html>
+

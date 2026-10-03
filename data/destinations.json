@@ -1,0 +1,319 @@
+[
+ {
+  "id": "hunza",
+  "name": "Hunza (Karimabad, Altit, Attabad)",
+  "district": "Hunza",
+  "lat": 36.32,
+  "lng": 74.66,
+  "altitude_m": 2438,
+  "best_season": "April to October",
+  "overview": "Hunza is the crown jewel of Gilgit-Baltistan, home to the iconic Karimabad bazaar, the 900-year-old Baltit Fort, and the turquoise Attabad Lake formed by a 2010 landslide. The valley is framed by Rakaposhi (7,788 m) and Ultar Sar peaks. April brings cherry blossoms and the famous Jashn-e-Baharan festival. The Karakoram Highway runs through it, making it the most accessible major valley in GB.",
+  "how_to_reach": "By road via Karakoram Highway (KKH) from Islamabad: ~14-16 hours by NATCO bus or private car. From Gilgit city: ~2 hours by Suzuki/jeep. Nearest airport is Gilgit Airport (GIL), with daily PIA flights from Islamabad (weather permitting, ~1 hour). From Gilgit airport, take a shared van to Hunza (~2 hours).",
+  "activities": [
+   "Baltit Fort visit",
+   "Altit Fort visit",
+   "Attabad Lake boating",
+   "Rakaposhi base camp hike",
+   "Eagle's Nest viewpoint trek",
+   "Duikar sunrise viewpoint",
+   "Ultar Meadows hiking",
+   "Passu Cones photography",
+   "Hussaini suspension bridge walk",
+   "Local food tours",
+   "Cherry and apricot blossom walks (April)"
+  ],
+  "safety": "Generally very safe for tourists. Altitude (2,438 m) may cause mild headaches; acclimatize for a day. Road from Rawalpindi is long — avoid night driving on KKH. Some side roads to Eagles Nest require a 4WD jeep.",
+  "tips": "Stay in Karimabad for easy access to forts and viewpoints. Book accommodation in advance during peak season (June-September). Try local walnut cake, mulberry juice, and Hunzai butter tea. The Duikar viewpoint requires a jeep ride and is best at sunrise.",
+  "cost_per_day_pkr": 6000,
+  "hidden_gem": false,
+  "sources": [
+   {
+    "label": "Gilgit-Baltistan Tourism Board",
+    "verified": true
+   }
+  ]
+ },
+ {
+  "id": "skardu",
+  "name": "Skardu",
+  "district": "Skardu",
+  "lat": 35.3,
+  "lng": 75.63,
+  "altitude_m": 2228,
+  "best_season": "May to October",
+  "overview": "Skardu is the adventure capital of Pakistan and the gateway to K2 and the Baltoro Glacier. The town sits in a wide valley on the Indus River, flanked by ancient Kharpocho Fort on a cliff. Nearby: the serene Shangrila (Lower Kachura) Lake, Upper Kachura Lake, Satpara Lake, and Manthokha Waterfall. It serves as the base camp for expeditions to five of the world's 14 eight-thousanders.",
+  "how_to_reach": "By air: PIA flights from Islamabad (ISB) to Skardu Airport (KDU), ~1 hour, subject to weather cancellations. By road from Islamabad via Mansehra, Chilas, Gilgit: ~18-20 hours on KKH then Skardu road. From Gilgit: ~6-8 hours by jeep via Gilgit-Skardu road.",
+  "activities": [
+   "Kharpocho Fort climb",
+   "Shangrila (Lower Kachura) Lake",
+   "Upper Kachura Lake",
+   "Satpara Lake boat ride",
+   "K2 Base Camp trekking (multi-day)",
+   "Concordia trek",
+   "Deosai day trip",
+   "Manthokha Waterfall",
+   "Katpana Cold Desert visit",
+   "Rock Cathedral hike",
+   "Skardu bazaar and local crafts"
+  ],
+  "safety": "Altitude 2,228 m — mild adjustment needed. Flight cancellations are very common; never book tight onward travel after a Skardu flight. KKH to Skardu road has landslide-prone stretches, especially after July rains. High-altitude treks require permits, a registered guide, and acclimatization.",
+  "tips": "Always carry cash; ATMs in Skardu are unreliable and non-existent on trekking routes. Book jeeps a day ahead during peak season. Skardu is the last place to buy proper trekking gear before Baltoro. Fly in, drive out (or vice versa) to avoid being stranded if flights cancel.",
+  "cost_per_day_pkr": 7000,
+  "hidden_gem": false,
+  "sources": [
+   {
+    "label": "Alpine Club of Pakistan / GB Tourism",
+    "verified": true
+   }
+  ]
+ },
+ {
+  "id": "deosai",
+  "name": "Deosai National Park",
+  "district": "Skardu / Astore",
+  "lat": 35.03,
+  "lng": 75.4,
+  "altitude_m": 4114,
+  "best_season": "July to September",
+  "overview": "Deosai meaning 'Land of Giants' in Shina is the world's second-highest plateau, at an average elevation of 4,114 m. July to September it transforms into a vast wildflower meadow with yellow, purple and white blooms. A protected national park home to the Himalayan brown bear, snow leopard, Tibetan wolf, and golden marmot. Sheosar Lake within the park is one of the highest lakes in the world.",
+  "how_to_reach": "From Skardu: ~2-3 hours by 4WD jeep over the Bara Pani pass. The road is only open July to early October. Entry from Astore side also possible. Mandatory entry fee and permit from Deosai National Park office in Skardu.",
+  "activities": [
+   "Wildflower plateau drives and walks",
+   "Sheosar Lake photography",
+   "Himalayan brown bear spotting",
+   "Snow leopard and Tibetan wolf wildlife spotting",
+   "Golden marmot watching",
+   "Star-gazing and camping (zero light pollution)",
+   "Bara Pani camp area",
+   "Sheosar Lake birdwatching"
+  ],
+  "safety": "Extreme altitude at 4,114 m. Acclimatize in Skardu for at least 2 nights before visiting. Acute Mountain Sickness (AMS) is a real risk. Temperatures drop below freezing even in August nights. Sudden blizzards can occur at any time. Do not visit before July as the road is snowbound. Always camp with a guide.",
+  "tips": "Hire a jeep from Skardu that comes with a local driver who knows the plateau. Bring all your own food and fuel as there are no shops. A park ranger guide is recommended for bear-spotting. Camp near Bara Pani for the best night sky. Sunrise at Sheosar Lake is unforgettable.",
+  "cost_per_day_pkr": 5000,
+  "hidden_gem": false,
+  "sources": [
+   {
+    "label": "WWF-Pakistan Deosai Conservation Project",
+    "verified": true
+   }
+  ]
+ },
+ {
+  "id": "fairy-meadows",
+  "name": "Fairy Meadows",
+  "district": "Diamer",
+  "lat": 35.38,
+  "lng": 74.59,
+  "altitude_m": 3300,
+  "best_season": "May to October",
+  "overview": "Fairy Meadows (Joot in Shina) is a lush alpine meadow at 3,300 m offering the most dramatic close-up view of Nanga Parbat's Raikot face. The Killer Mountain (8,126 m) towers directly above. A network of hiking trails leads toward Nanga Parbat Base Camp. Small wooden guesthouses dot the meadow. The jeep track from Raikot Bridge is one of the most thrilling roads in the world.",
+  "how_to_reach": "From Islamabad via KKH to Raikot Bridge (~12 hours by road). From Raikot Bridge, a bone-jarring jeep ride of ~18 km on a narrow cliff-edge track (~1.5-2 hours) reaches Tato village (2,800 m). From Tato, hike ~4-5 km (1.5-2 hours) uphill to Fairy Meadows. Alternatively hire a horse at Tato. Gilgit to Raikot Bridge: ~2.5 hours.",
+  "activities": [
+   "Nanga Parbat Base Camp trek (1-2 day)",
+   "Beyal Camp hike",
+   "Glacier viewpoint hike",
+   "Camping under Nanga Parbat",
+   "Photography of Raikot face",
+   "Wildflower walks",
+   "Mountain birdwatching"
+  ],
+  "safety": "The jeep track from Raikot Bridge is extremely narrow with sheer drops. At 3,300 m altitude sickness is possible; ascend slowly. Hire only local government-registered jeeps. The hike to base camp has crevasse risk near the glacier so go with a local guide.",
+  "tips": "Arrive in Raikot in the morning to get a jeep before the afternoon queue. Book a guesthouse at Fairy Meadows in advance in peak season. Bring warm clothes as nights drop to near 0C even in July. The meadow view of Nanga Parbat at sunrise is worth waking up at 5 AM for.",
+  "cost_per_day_pkr": 4500,
+  "hidden_gem": false,
+  "sources": [
+   {
+    "label": "Gilgit-Baltistan Tourism / local guide networks",
+    "verified": true
+   }
+  ]
+ },
+ {
+  "id": "naltar",
+  "name": "Naltar Valley",
+  "district": "Gilgit",
+  "lat": 36.17,
+  "lng": 74.18,
+  "altitude_m": 2900,
+  "best_season": "April to October (skiing: January to March)",
+  "overview": "Naltar Valley is a strikingly beautiful pine-forested valley 55 km from Gilgit city, famous for its three high-altitude lakes: Naltar (Bashkiri) Lake, Red Lake, and Blue Lake, each a vivid different colour. In winter it becomes Pakistan's only operational ski resort, hosted by the Pakistan Air Force. Dense juniper and pine forests are refreshingly different from the bare rock scenery of most of GB.",
+  "how_to_reach": "From Gilgit city: 55 km by jeep, approximately 2-2.5 hours. The road is unpaved and requires a 4WD jeep. Jeeps available from Gilgit Jutial stand. From Karimabad (Hunza): ~3.5 hours back to Gilgit then onward.",
+  "activities": [
+   "Naltar (Bashkiri) Lake visit",
+   "Red Lake hike",
+   "Blue Lake hike",
+   "Skiing (Jan-Mar, PAF ski resort)",
+   "Pine forest walks",
+   "Mountain biking trails",
+   "Photography of coloured lakes",
+   "Camping in the forest",
+   "4WD off-road driving"
+  ],
+  "safety": "Road to Naltar is rough and requires a reliable jeep; do not attempt in a standard car. In winter, the valley can be snowbound. The hike from Naltar village to the upper lakes gains ~600 m altitude; take it slowly. The PAF ski resort is the only sanctioned ski area; skiing off-piste is dangerous.",
+  "tips": "Start early from Gilgit to reach upper lakes by midday. Hire a jeep through your hotel in Gilgit to avoid overcharging. There are basic guesthouses in Naltar village. Bring a packed lunch as food options are limited. The three lakes have very different colours and are within 2 km of each other.",
+  "cost_per_day_pkr": 4000,
+  "hidden_gem": false,
+  "sources": [
+   {
+    "label": "GB Tourism / Pakistan Air Force Ski Club Naltar",
+    "verified": true
+   }
+  ]
+ },
+ {
+  "id": "yasin",
+  "name": "Yasin Valley",
+  "district": "Ghizer",
+  "lat": 36.38,
+  "lng": 73.35,
+  "altitude_m": 3100,
+  "best_season": "May to September",
+  "overview": "Yasin is one of the most serene and genuinely off-the-beaten-path valleys in Pakistan. Located in Ghizer district, it sees almost no foreign tourists. The valley stretches over 100 km lined with ancient apricot orchards, mud-brick villages, and high-altitude pastures. Yasin Fort (Kilik Dara) is a 600-year-old historic ruin. The Karambar Lake at the valley head sits at 4,272 m. Local Shina and Wakhi culture is preserved in an extraordinary way.",
+  "how_to_reach": "From Gilgit: drive to Gupis (~5 hours) on the Gilgit-Ghizer road, then turn north into Yasin Valley. Total from Gilgit: ~7-8 hours by jeep. A 4WD is essential. There is no commercial air access. Jeeps available in Gilgit Punial Stand.",
+  "activities": [
+   "Karambar Lake trek (3-4 days round trip)",
+   "Yasin Fort (Kilik Dara) exploration",
+   "Trekking to high-altitude pastures",
+   "Village cultural visits",
+   "Apricot harvest walks (August)",
+   "Trout fishing in Yasin River",
+   "Polo match watching",
+   "Photography of untouched landscapes"
+  ],
+  "safety": "Roads are rough and can wash out after heavy rain. The Karambar Lake trek reaches 4,272 m and requires proper acclimatization and a local guide. Mobile signal is absent in most of the valley. No hospitals beyond a basic health unit in Yasin town.",
+  "tips": "Register with local police/scouts upon arrival. Carry all your own supplies from Gilgit as shops in Yasin town are very basic. Hospitality from local families is extraordinary. Best visited with a local guide from Ghizer who knows the valley intimately.",
+  "cost_per_day_pkr": 3500,
+  "hidden_gem": true,
+  "sources": [
+   {
+    "label": "GB Tourism / Ghizer District Administration",
+    "verified": true
+   }
+  ]
+ },
+ {
+  "id": "phander",
+  "name": "Phander Valley",
+  "district": "Ghizer",
+  "lat": 36.17,
+  "lng": 72.95,
+  "altitude_m": 3600,
+  "best_season": "June to September",
+  "overview": "Phander Valley is a hidden paradise in Ghizer district, centred on the impossibly blue Phander Lake framed by snow peaks and apricot trees. Famous for world-class trout fishing in the Ghizer River. Autumn (October) transforms the valley into a blaze of gold and amber. Lies on the remote Shandur-Gilgit jeep route and sees very few tourists.",
+  "how_to_reach": "From Gilgit: ~5-6 hours by jeep via the Ghizer road through Gahkuch and Gupis. From Chitral or Shandur: accessible via the Shandur Pass jeep track (June-September only). A 4WD is mandatory. No scheduled public transport; hire a jeep from Gilgit.",
+  "activities": [
+   "Phander Lake photography and walks",
+   "Trout fishing in Ghizer River",
+   "Camping on the lakeshore",
+   "Autumn foliage walks (October)",
+   "Shandur Pass jeep crossing",
+   "Village culture visits",
+   "Birdwatching (migratory birds, September-October)",
+   "Hiking to surrounding ridge viewpoints"
+  ],
+  "safety": "Roads beyond Gupis can wash out in late July and August; check with locals before departing. Phander sits at 3,600 m; pace yourself on arrival. No mobile signal in the valley. Emergency evacuation would require a long jeep ride to Gilgit.",
+  "tips": "The lake is most photogenic at golden hour. Ask your guesthouse host to arrange a local fisherman guide for trout fishing. The autumn colours (late September to October) are arguably the best in all of GB. Combine with a Shandur Pass crossing to Chitral for an epic multi-day jeep adventure.",
+  "cost_per_day_pkr": 3000,
+  "hidden_gem": true,
+  "sources": [
+   {
+    "label": "Ghizer Tourism / local guesthouses",
+    "verified": true
+   }
+  ]
+ },
+ {
+  "id": "ishkoman",
+  "name": "Ishkoman Valley",
+  "district": "Ghizer",
+  "lat": 36.55,
+  "lng": 73.82,
+  "altitude_m": 2800,
+  "best_season": "May to September",
+  "overview": "Ishkoman is one of the most remote and least-visited valleys in GB, extending north toward the Ishkoman Pass near the borders with Afghanistan and China. The valley shelters Wakhi, Kho, and Shina communities in near-traditional lifestyles. At its head, Karambar Lake sits at 4,272 m. The journey through gorges, suspension bridges, and isolated villages is an adventure in itself.",
+  "how_to_reach": "From Gilgit: drive to Gahkuch (~3 hours), then branch north into Ishkoman Valley. Total from Gilgit: ~5-6 hours by 4WD jeep. The road ends at Imit village. No public transport; a hired jeep from Gilgit or Gahkuch is the only option.",
+  "activities": [
+   "Karambar Lake trek (3-4 days)",
+   "Ishkoman River gorge walks",
+   "Wakhi village cultural immersion",
+   "Suspension bridge crossings",
+   "Remote camping in glacial valleys",
+   "Chiantar Glacier exploration",
+   "High-altitude pass treks (for experienced trekkers)",
+   "Photography of untouched wilderness"
+  ],
+  "safety": "Very remote with no hospitals, no mobile signal, and no rescue services. The Karambar Lake trek reaches 4,272 m and requires experienced mountain fitness, proper gear, and a local guide. Inform someone of your itinerary before departing. This valley is strictly for well-prepared, experienced travellers.",
+  "tips": "Engage a guide from Gahkuch who knows Ishkoman. Carry 4-5 days of supplies beyond what you think you need. The Chiantar Glacier hike is an extraordinary reward for experienced trekkers. Locals are exceptionally welcoming but English is not spoken; Urdu helps.",
+  "cost_per_day_pkr": 3000,
+  "hidden_gem": true,
+  "sources": [
+   {
+    "label": "GB Tourism / Ghizer District",
+    "verified": true
+   }
+  ]
+ },
+ {
+  "id": "shigar",
+  "name": "Shigar Valley",
+  "district": "Shigar",
+  "lat": 35.42,
+  "lng": 75.73,
+  "altitude_m": 2580,
+  "best_season": "April to October",
+  "overview": "Shigar Valley is an emerald-green oasis east of Skardu. The centrepiece is Shigar Fort, a 420-year-old royal palace converted into the luxurious Serena Heritage Hotel, one of the finest heritage hotels in Pakistan. The valley is lined with ancient apricot and apple orchards, centuries-old irrigation channels (kuls), and traditional Balti stone villages. The road north leads toward the Baltoro Glacier and K2 base camp route.",
+  "how_to_reach": "From Skardu: ~30 km by jeep, approximately 45 minutes. Jeeps and cars available from Skardu bazaar. The road is paved for the first half and jeep track thereafter. From Gilgit: fly or drive to Skardu first, then proceed to Shigar.",
+  "activities": [
+   "Shigar Fort and Serena Heritage Hotel visit",
+   "Apricot orchard walks",
+   "Traditional Balti village exploration",
+   "Shigar River valley drive",
+   "Baltoro Glacier approach (for K2 trek staging)",
+   "Rock art sites near Shigar",
+   "Photography of fort and Karakoram backdrop",
+   "Local Balti woodwork handicraft shopping"
+  ],
+  "safety": "Shigar is very safe and accessible. The onward road beyond Askole for Baltoro is for experienced trekkers only with permits and a registered guide. Flash flooding in the Shigar River can occasionally cut the road in late July-August.",
+  "tips": "Even if you cannot stay at Shigar Fort Serena, visit for lunch or a walk around the gardens. Local dried apricots from Shigar are considered among the best in Pakistan; buy directly from farmers. Combine with a day trip to Khaplu for a scenic Karakoram loop from Skardu.",
+  "cost_per_day_pkr": 5500,
+  "hidden_gem": true,
+  "sources": [
+   {
+    "label": "Serena Hotels / GB Tourism / Aga Khan Cultural Service Pakistan",
+    "verified": true
+   }
+  ]
+ },
+ {
+  "id": "khaplu",
+  "name": "Khaplu",
+  "district": "Ghanche",
+  "lat": 35.16,
+  "lng": 76.33,
+  "altitude_m": 2600,
+  "best_season": "May to October",
+  "overview": "Khaplu is a breathtaking valley in Ghanche district near the Line of Control, anchored by the magnificent Khaplu Palace (Yabgo Fort), a 19th-century royal residence restored by the Aga Khan Trust for Culture and now a heritage hotel. Surrounding villages are among the most traditionally preserved Balti settlements in the world. Ancient mosques, apricot orchards, and the roaring Shyok River make this one of the most photogenic valleys in Pakistan.",
+  "how_to_reach": "From Skardu: ~90 km east by jeep on the Skardu-Khaplu road, approximately 3-4 hours. The road follows the Shyok River valley. From Gilgit: fly or drive to Skardu, then continue to Khaplu. No direct air access to Khaplu.",
+  "activities": [
+   "Khaplu Palace (Yabgo Fort) visit",
+   "Khaplu Heritage Hotel stay",
+   "Traditional Balti village walks",
+   "Shyok River views",
+   "15th-century Chaqchan Mosque visit (oldest mosque in GB)",
+   "Apricot harvest walks (August)",
+   "Hushe Valley trekking approach",
+   "Photography of fort and Karakoram peaks",
+   "Local Balti food experience"
+  ],
+  "safety": "Khaplu is close to the Line of Control; adhere strictly to all military checkpost regulations and carry original CNIC or passport. Photography near military installations is prohibited. The road from Skardu has some landslide-prone sections.",
+  "tips": "Stay at least one night at the Khaplu Heritage Hotel for the full fort experience. The 15th-century Chaqchan Mosque is the oldest mosque in GB and requires respectful modest clothing to visit. Combine with Hushe Valley if you want a remote trekking base near the Gondogoro La pass.",
+  "cost_per_day_pkr": 6000,
+  "hidden_gem": true,
+  "sources": [
+   {
+    "label": "Aga Khan Trust for Culture / GB Tourism / Ghanche District",
+    "verified": true
+   }
+  ]
+ }
+]
