@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/app.py"
+    }
+  ],
+  "functions": {
+    "app.py": {
+      "maxDuration": 60,
+      "includeFiles": [
+        "data/**",
+        "templates/**",
+        "static/**"
+      ]
+    }
+  }
+}

@@ -4,7 +4,11 @@ import json
 import uuid
 from werkzeug.security import generate_password_hash, check_password_hash
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "northgpt.db")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.environ.get("DB_PATH") or os.path.join(
+    "/tmp" if os.environ.get("VERCEL") else BASE_DIR,
+    "northgpt.db",
+)
 
 def get_db():
     conn = sqlite3.connect(DB_PATH)

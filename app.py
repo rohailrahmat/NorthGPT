@@ -1,4 +1,4 @@
-import os, secrets, traceback
+import os, traceback
 from functools import wraps
 from flask import (
     Flask, jsonify, render_template, request,
@@ -16,8 +16,10 @@ if not os.path.isdir(STATIC):
 
 app = Flask(__name__, static_folder=STATIC, static_url_path="/static")
 # Set SECRET_KEY in your environment. The dev fallback is for local use only.
-app.secret_key = os.environ.get("SECRET_KEY") or (
-    secrets.token_hex(32) if SERVERLESS else "dev-only-secret-change-me")
+secret_key = os.environ.get("SECRET_KEY")
+if SERVERLESS and not secret_key:
+    raise RuntimeError("Set SECRET_KEY in the Vercel project environment.")
+app.secret_key = secret_key or "dev-only-secret-change-me"
 app.config.update(
     SESSION_COOKIE_SAMESITE="Lax",
     SESSION_COOKIE_SECURE=SERVERLESS,

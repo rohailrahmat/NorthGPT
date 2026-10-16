@@ -1,4 +1,4 @@
-import json, re, time, logging, numpy as np
+import json, os, re, time, logging, numpy as np
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -7,6 +7,8 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger("northgpt")
 client = genai.Client()
+
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 EMBED_MODEL = "gemini-embedding-001"
 # Ordered fallback chain:
@@ -22,8 +24,8 @@ GEN_MODELS = [
 ]
 FLOOR = 0.50
 
-DEST = {d["id"]: d for d in json.load(open("data/destinations.json", encoding="utf-8"))}
-GUIDES = {g["id"]: g for g in json.load(open("data/guides.json", encoding="utf-8"))}
+DEST = {d["id"]: d for d in json.load(open(os.path.join(DATA_DIR, "destinations.json"), encoding="utf-8"))}
+GUIDES = {g["id"]: g for g in json.load(open(os.path.join(DATA_DIR, "guides.json"), encoding="utf-8"))}
 
 QUIET = re.compile(r"quiet|offbeat|less crowded|hidden|peaceful|remote", re.I)
 GUIDE_QUERY = re.compile(r"guide|tour operator|driver|jeep hire|book|contact|whatsapp|phone|hire|agency|porter|call", re.I)
@@ -142,14 +144,14 @@ def build_index():
     vecs = np.vstack(vecs_list)
     for c, v in zip(ch, vecs):
         c["vec"] = v.tolist()
-    json.dump(ch, open("data/index.json", "w", encoding="utf-8"))
+    json.dump(ch, open(os.path.join(DATA_DIR, "index.json"), "w", encoding="utf-8"))
     log.info("Successfully indexed %d chunks into data/index.json", len(ch))
 
 _idx = None
 def retrieve(q, k=5):
     global _idx
     if _idx is None:
-        ch = json.load(open("data/index.json", encoding="utf-8"))
+        ch = json.load(open(os.path.join(DATA_DIR, "index.json"), encoding="utf-8"))
         _idx = (ch, np.array([c["vec"] for c in ch]))
     ch, V = _idx
     q_vec = embed([q])[0]
